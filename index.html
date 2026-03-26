@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="description" content="实验预约系统 - 在线选择时间段预约实验">
+  <title>实验预约系统</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>实验预约系统</h1>
+      <p class="subtitle">请选择日期和时间段进行预约</p>
+    </header>
+
+    <div class="date-tabs" id="dateTabs">
+      <button class="date-tab active" data-date="2026-03-27">
+        <span class="date-num">3月27日</span>
+        <span class="date-day">周五</span>
+      </button>
+      <button class="date-tab" data-date="2026-03-28">
+        <span class="date-num">3月28日</span>
+        <span class="date-day">周六</span>
+      </button>
+      <button class="date-tab" data-date="2026-03-29">
+        <span class="date-num">3月29日</span>
+        <span class="date-day">周日</span>
+      </button>
+    </div>
+
+    <div class="slots-container" id="slotsContainer">
+      <div class="loading" id="loading">加载中...</div>
+      <div class="time-slots" id="timeSlots"></div>
+    </div>
+  </div>
+
+  <!-- Booking Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2>预约确认</h2>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="selected-info" id="selectedInfo"></div>
+        <form id="bookingForm">
+          <div class="form-group">
+            <label for="nameInput">姓名 <span class="required">*</span></label>
+            <input type="text" id="nameInput" placeholder="请输入您的姓名" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="contactInput">联系方式 <span class="required">*</span></label>
+            <input type="text" id="contactInput" placeholder="手机号 / 微信号" required autocomplete="tel">
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submitBtn">确认预约</button>
+            <button type="button" class="btn btn-secondary" id="cancelBtn">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
