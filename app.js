@@ -122,7 +122,7 @@ function renderSlots() {
       <div class="time-slot ${statusClass}" data-slot="${slot.key}" ${isBooked ? '' : 'onclick="onSlotClick(\'' + slot.key + '\')"'}>
         <div class="slot-left">
           <span class="slot-time">${slot.start} - ${slot.endLabel}</span>
-          ${isBooked ? `<span class="booked-name">${escapeHtml(reservation.name)}</span>` : ''}
+          ${''}
         </div>
         <div class="slot-status">
           <span class="status-dot"></span>
