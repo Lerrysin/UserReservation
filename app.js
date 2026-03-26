@@ -30,17 +30,17 @@ const TIME_SLOTS = generateTimeSlots();
 let currentDate = DATES[0].date;
 let reservations = {};  // { "2026-03-27_8": { name, contact }, ... }
 let selectedSlot = null;
-let supabase = null;
+let sbClient = null;
 let useLocalStorage = true;
 
 // ===== Supabase Init =====
 function initSupabase() {
   if (SUPABASE_URL && SUPABASE_KEY && window.supabase) {
     try {
-      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       useLocalStorage = false;
       // Subscribe to real-time changes
-      supabase
+      sbClient
         .channel('reservations')
         .on('postgres_changes', { event: '*', schema: 'public', table: 'reservations' }, () => {
           loadReservations();
@@ -56,9 +56,9 @@ function initSupabase() {
 
 // ===== Data Layer =====
 async function loadReservations() {
-  if (!useLocalStorage && supabase) {
+  if (!useLocalStorage && sbClient) {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await sbClient
         .from('reservations')
         .select('*');
       if (error) throw error;
@@ -82,8 +82,8 @@ async function loadReservations() {
 async function saveReservation(date, timeSlot, name, contact) {
   const key = `${date}_${timeSlot}`;
 
-  if (!useLocalStorage && supabase) {
-    const { error } = await supabase
+  if (!useLocalStorage && sbClient) {
+    const { error } = await sbClient
       .from('reservations')
       .insert([{ date, time_slot: timeSlot, name, contact }]);
     if (error) {
