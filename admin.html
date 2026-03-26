@@ -420,7 +420,10 @@
         return;
       }
 
-      allData = data || [];
+      allData = (data || []).sort((a, b) => {
+        if (a.date !== b.date) return a.date.localeCompare(b.date);
+        return parseInt(a.time_slot) - parseInt(b.time_slot);
+      });
       document.getElementById('totalCount').textContent = allData.length;
       document.getElementById('remainCount').textContent = TOTAL_SLOTS - allData.length;
       renderTable();
