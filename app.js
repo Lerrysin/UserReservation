@@ -1,7 +1,7 @@
 // ===== Configuration =====
 // TODO: Replace with your Supabase project credentials
 const SUPABASE_URL = 'https://kattpnfudttpzdpmueuk.supabase.co';   // e.g. 'https://xxxxx.supabase.co'
-const SUPABASE_KEY = 'sb_publishable__nMKSEGyAoa63DHCu4Pb1w_Yk34p8v0';   // your anon/public key
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthdHRwbmZ1ZHR0cHpkcG11ZXVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MDkxMTYsImV4cCI6MjA5MDA4NTExNn0.uRtQm4FYMbh9-_pm9KBTb-92_1iwPwaaNozg12nS8kY';   // your anon/public key
 
 // ===== Constants =====
 const DATES = [
