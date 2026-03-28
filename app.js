@@ -102,6 +102,13 @@ async function saveReservation(date, timeSlot, name, contact) {
   }
 }
 
+// ===== Time Check =====
+function isSlotExpired(date, slotKey) {
+  const now = new Date();
+  const slotEnd = new Date(date + 'T' + String(parseInt(slotKey) + 1).padStart(2, '0') + ':00:00');
+  return now >= slotEnd;
+}
+
 // ===== Rendering =====
 function renderSlots() {
   const container = document.getElementById('timeSlots');
@@ -115,14 +122,27 @@ function renderSlots() {
     const key = `${currentDate}_${slot.key}`;
     const reservation = reservations[key];
     const isBooked = !!reservation;
-    const statusClass = isBooked ? 'booked' : 'available';
-    const statusText = isBooked ? '已预约' : '可预约';
+    const expired = isSlotExpired(currentDate, slot.key);
+
+    let statusClass, statusText, clickable;
+    if (expired) {
+      statusClass = 'expired';
+      statusText = '已过期';
+      clickable = false;
+    } else if (isBooked) {
+      statusClass = 'booked';
+      statusText = '已预约';
+      clickable = false;
+    } else {
+      statusClass = 'available';
+      statusText = '可预约';
+      clickable = true;
+    }
 
     html += `
-      <div class="time-slot ${statusClass}" data-slot="${slot.key}" ${isBooked ? '' : 'onclick="onSlotClick(\'' + slot.key + '\')"'}>
+      <div class="time-slot ${statusClass}" data-slot="${slot.key}" ${clickable ? 'onclick="onSlotClick(\'' + slot.key + '\')"' : ''}>
         <div class="slot-left">
           <span class="slot-time">${slot.start} - ${slot.endLabel}</span>
-          ${''}
         </div>
         <div class="slot-status">
           <span class="status-dot"></span>
